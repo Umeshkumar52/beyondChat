@@ -2,7 +2,7 @@ import React from 'react'
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-const clientId = 'dogwood-site-449612-p1';
+const clientId = '708464769189-2o2ek5nrmfpn2clb3r08m38ajsncraqe.apps.googleusercontent.com';
 export default function GoogleAuth() {
   const navigate=useNavigate()
   return (
