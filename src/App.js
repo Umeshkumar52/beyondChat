@@ -6,7 +6,6 @@ import Login from './pages/Login'
 import OrganizationSetup from "./pages/OrganizationSetup";
 import IntegrateWeb from "./pages/IntegrateWeb";
 import TestWebIntegration from "./pages/OrganizationSetup";
-import IntegrateSucces from "./pages/IntegrateSucces";
 import Successfull from './components/Successfull'
 import IntegrateWebsite from './components/IntegrateWebsite'
 import GoogleAuth from "./components/GoogleAuth";

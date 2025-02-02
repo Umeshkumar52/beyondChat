@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { PiHandPointingFill } from 'react-icons/pi'
 import { VscRunAll } from 'react-icons/vsc'
-import { ToastContainer,toast } from 'react-toastify'
 import logo from '../assets/—Pngtree—chatbot_messenger_concept_design_man_6671191[2].png'
 import { useNavigate } from 'react-router-dom'
 export default function OrganizationSetup(){
     const[fetched,setFetched]=useState(false)
+    const[complete,setComplete]=useState(false)
     // const[downloaded,setDownloaded]=useState(false)
     const[progress,setProgress]=useState(0)
     const[data,setData]=useState([])
@@ -13,7 +13,9 @@ export default function OrganizationSetup(){
     async function scraping(event) {
          event.preventDefault()
          try {
-         const response=await fetch("http://localhost:5000/scrape") 
+          setFetched(true)
+          setComplete(true)
+         const response=await fetch("https://beyondchatserver.onrender.com/scrape") 
          const contentlength=response.headers.get('Content-Length')
             const total=parseInt(contentlength || "0" ,10)
             let loaded=0;
@@ -25,13 +27,16 @@ export default function OrganizationSetup(){
               const {done,value}=await reader.read()
               if(done) break;          
               loaded +=value.length;
-              setFetched(true)
-              setProgress(Math.round(loaded*100)/total)  
+              // setFetched(true)
+              setProgress(Math.round((loaded*100)/total)-196)  
               result +=decoder.decode(value,{stream:true})         
               setData(JSON.parse(result))
             }
+           setTimeout(()=>{
+            setComplete(false)
+           },700)
           } catch (error) {
-           toast.error("Failed to scraped data from website")
+           return
           }
     }
   return (
@@ -75,12 +80,8 @@ export default function OrganizationSetup(){
             </p>
         </div>
         <div className='flex justify-center'>
-        <button type='submit' className='w-[12rem] flex items-center justify-center gap-2 px-2 py-1 text-white font-medium rounded-md hover:bg-blue-800/100 bg-blue-700/100'><VscRunAll/>{(progress>100 && progress<=99)?`Fetching ${progress}`:"Run tool"}</button>
+        <button type='submit' className='w-[12rem] flex items-center justify-center gap-2 px-2 py-1 text-white font-medium rounded-md hover:bg-blue-800/100 bg-blue-700/100'><VscRunAll/>{(complete)?`Fetching ${progress} %`:"Run tool"}</button>
         </div>
-           {(progress>100 && progress<=99)?<div className='flex justify-center'>
-              <progress className='animate-pulse progressbar bg-gradient-to-r from-red-500 via-yellow-500 to-green-600 w-full max-w-[14rem]' value={progress} max={100}/>
-              <p>{progress}%</p>
-          </div>:""}
       </form>
       {/* Output */}
     
@@ -109,7 +110,6 @@ export default function OrganizationSetup(){
     </div>
     </div>:""
     }
-    <ToastContainer/>
     </div>
   )
 }

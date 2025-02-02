@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import AIpng from '../assets/robot.png'
 import { FaGoogle } from 'react-icons/fa'
 import GoogleAuth from '../components/GoogleAuth'
-import { toast } from 'react-toastify'
+import axiosInstance from '../axiosInstance'
 export default function Login() {
   const[loginData,setLoginData]=useState({
     Email:"",
@@ -19,20 +19,14 @@ export default function Login() {
    })
    }
    async function Send_OTP(event) {
-      event.preventDefault()
-     try {
-      const response=await fetch("http://localhost:5000/send-otp",{
-        method:"Post",
-        'Content-Type':"application/json",
-        data:loginData.Email
-       })
-       if(response){
-        navigate('/otpAuth',{state:loginData})
-       }
-     } catch (error) {
-      toast.error("failed to register")
-     }
-    }
+    event.preventDefault()
+   try {
+    const response=axiosInstance.post('/send-otp',{email:loginData.Email})
+      navigate('/otpAuth',{state:loginData})
+   } catch (error) {
+   return
+   }
+  }
   return (
     <div className='w-full py-4 justify-center px-2 flex items-center'>
     <div className='max-w-[20rem]  lg:max-w-[21rem] xl:max-w-[30rem] flex flex-col gap-4 items-center'>
@@ -45,10 +39,10 @@ export default function Login() {
       </div>
       <form onSubmit={Send_OTP} className='w-full flex flex-col gap-4'>
           <div>
-              <input type='Email' required name='Email' value={loginData.Email} className='w-full border-2 hover:ring-1 ring-[#1f10bbf5] focus:outline-none p-2' placeholder='Email address*'/>
+              <input type='Email' required name='Email' onChange={catch_login_detail} value={loginData.Email} className='w-full border-2 hover:ring-1 ring-[#1f10bbf5] focus:outline-none p-2' placeholder='Email address*'/>
           </div>
           <div>
-              <input type='Password' required name='Password' value={loginData.Password}  className='w-full border-2 hover:ring-1 ring-[#1f10bbf5] focus:outline-none p-2' placeholder='Password*'/>
+              <input type='Password' required name='Password' onChange={catch_login_detail} value={loginData.Password}  className='w-full border-2 hover:ring-1 ring-[#1f10bbf5] focus:outline-none p-2' placeholder='Password*'/>
           </div>
           <button type='submit' className='w-full border-2 hover:ring-2 ring-[#510ab4f5] bg-[#ca0ed4] text-white font-semibold p-2'>Sign In</button>
           <div>

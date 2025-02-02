@@ -1,12 +1,13 @@
 import React, { createElement, useState } from "react";
 import logo from "../assets/—Pngtree—chatbot_messenger_concept_design_man_6671190_(1)[2].png";
-import { json, useNavigate, useSearchParams } from "react-router-dom";
-import { ToastContainer,toast } from "react-toastify";
-import { MdAir } from "react-icons/md";
-import { BiArrowBack } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../axiosInstance";
+import { toast, ToastContainer } from "react-toastify";
 export default function IntegrateWeb() {
+  // https://beyondchatserver.onrender.com
   const chatbot_intg_url = "http://your-chatbot-url.com/chatbot.js";
   const navigate = useNavigate();
+  const[message,setMessage]=useState("")
   const [copy, setCopy] = useState(false);
   const [email,setEmail]=useState("")
   const copyToClipBoard=()=>{
@@ -18,22 +19,11 @@ export default function IntegrateWeb() {
    async function sent_mail(event){
     event.preventDefault()
     try {
-      console.log("call");
-      
-      const response=fetch("http://localhost:5000/sendmail",{
-        method:"POST",
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify({
-          email:email
-        })
-      })
-      console.log(await response);
-      toast.success("sent")
+      const response=await axiosInstance.post('/sendmail',{email:email})
+      setMessage(response.message)
       setEmail("")
     } catch (error) {
-     toast.error("Please try again!")
+     return
     }
    }
   return (
@@ -92,6 +82,7 @@ export default function IntegrateWeb() {
 
       </div>
       </div>
+    
     </div>
   );
 }

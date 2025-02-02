@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import AIpng from '../assets/robot.png'
 import { FaGoogle } from 'react-icons/fa'
 import GoogleAuth from '../components/GoogleAuth'
-import { toast } from 'react-toastify'
+import axios from 'axios'
+import axiosInstance from '../axiosInstance'
 export default function Registration() {
   const navigate=useNavigate()
   const[registration,setRegistration]=useState({
@@ -19,19 +20,13 @@ export default function Registration() {
       [name]:value
      })
   }
-  async function Send_OTP(event,registration) {
+  async function Send_OTP(event) {
     event.preventDefault()
    try {
-    const response=await fetch("http://localhost:5000/send-otp",{
-      method:"Post",
-      'Content-Type':"application/json",
-      data:registration.Email
-     })
-     if(response){
+    const response=axiosInstance.post('/send-otp',{email:registration.Email})
       navigate('/otpAuth',{state:registration})
-     }
    } catch (error) {
-    toast.error("failed to register")
+   return
    }
   }
   return (
