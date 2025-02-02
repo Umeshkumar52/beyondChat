@@ -1,6 +1,6 @@
 import axios from "axios";
-const url="http://localhost:5000"
-//  const url="https://beyondchatserver.onrender.com/send-otp"
+// const url="http://localhost:5000"
+ const url="https://beyondchatserver.onrender.com"
  const axiosInstance= axios.create({
     baseURL:url,
     // 'withCredentials':true,
