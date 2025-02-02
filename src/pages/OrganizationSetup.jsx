@@ -3,6 +3,7 @@ import { PiHandPointingFill } from 'react-icons/pi'
 import { VscRunAll } from 'react-icons/vsc'
 import logo from '../assets/—Pngtree—chatbot_messenger_concept_design_man_6671191[2].png'
 import { useNavigate } from 'react-router-dom'
+import axiosInstance from '../axiosInstance'
 export default function OrganizationSetup(){
     const[fetched,setFetched]=useState(false)
     const[complete,setComplete]=useState(false)
@@ -15,7 +16,7 @@ export default function OrganizationSetup(){
          try {
           setFetched(true)
           setComplete(true)
-         const response=await fetch("https://beyondchatserver.onrender.com/scrape") 
+         const response=await fetch("https://beyondchatserver.onrender.com/scrape")         
          const contentlength=response.headers.get('Content-Length')
             const total=parseInt(contentlength || "0" ,10)
             let loaded=0;
