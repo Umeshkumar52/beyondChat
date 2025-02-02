@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AIpng from "../assets/robot.png";
 import scrapImg from "../assets/WhatsApp Image 2025-01-29 at 19.49.25_b706c4c8.jpg";
 import bgImg from "../assets/—Pngtree—ai_chatbot_concept_illustration_14527457[1].png";
@@ -9,7 +9,8 @@ import { FaRobot } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
-  const user=localStorage.getItem("user")
+  const[isLogged,setIsloged]=useState(false)
+  const isloggdin=localStorage.getItem("isloggdin")  
   return (
     <div className="relative flex flex-col gap-14 lg:gap-0 pb-10 justify-center">
       <img onClick={()=>navigate('/orgnizationsetup')} className="fixed bottom-2 cursor-pointer right-2 w-8 rounded-xl" src={helpLogo}/>
@@ -20,7 +21,7 @@ export default function Home() {
           <span className="text-[#f83cf8]">AI</span> Scraper
         </h1>
         </div>
-        {user.Isloggdin?
+        {!isloggdin?
         <button onClick={()=>navigate("/signup")} className="px-2 py-1 text-base text-white font-medium bg-[#a218f7] hover:bg-[#6837a9] rounded-md">
           Sign Up
         </button>:""

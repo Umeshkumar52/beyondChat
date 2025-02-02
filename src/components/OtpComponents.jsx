@@ -12,11 +12,9 @@ export default function OtpComponents() {
     event.preventDefault()
     try {
         const response=axiosInstance.post('/verify-otp',{otp:otp,email:userData.Email})
+          localStorage.setItem("isloggdin",true)
           setMessage(response.message)          
            if(response.message!="Invalid OTP") {
-            localStorage.setItem("user",{
-              Isloggdin:true
-            })
             navigate("/")
            }
     } catch (error) {
