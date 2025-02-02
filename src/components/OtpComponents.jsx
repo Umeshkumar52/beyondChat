@@ -14,17 +14,11 @@ export default function OtpComponents() {
         const response=axiosInstance.post('/verify-otp',{otp:otp,email:userData.Email})
           setMessage(response.message)          
            if(response.message!="Invalid OTP") {
-            localStorage.setItem(userData.Email,true)
+            localStorage.setItem("user",{
+              Isloggdin:true
+            })
             navigate("/")
            }
-            // const userRegister=await fetch("https://beyondchatserver.onrender.com/signup",{
-            //     method:"POST",
-            //      headers:{
-            //      'Content-Type':'application/json'
-            //        },
-            //     data:JSON.stringify(userData)
-            //   })
-        //  }
     } catch (error) {
         setMessage("Invalid OTP")
     }
