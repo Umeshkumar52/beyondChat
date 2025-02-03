@@ -9,6 +9,7 @@ export default function GoogleAuth() {
     <GoogleOAuthProvider clientId={clientId}>
     <GoogleLogin
       onSuccess={(credentialResponse) => {
+        localStorage.setItem("isloggdin",true)
         const decoded = jwtDecode(credentialResponse.credential)
         navigate('/')
       }}
